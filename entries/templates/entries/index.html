@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -27,21 +28,28 @@
             </div>
           </div>
         </article>
-
         {% for entry in entries %}
         <article class="media">
           <div class="media-content">
             <div class="content">
               <p>
+                <p class="title" style="font-size: 25px;">
+                  <a href="{% url 'detail' entry.id %}">{{ entry.title }}</a>
+                </p>
                 <strong>{{entry.date_posted}}</strong>
                 <br />
                 {{entry.text}}
               </p>
+            
+              <form method="post" action="{% url 'delete' entry.id %}">
+                {% csrf_token %}
+                <a href="{% url 'edit' entry.id %}" class="button is-link">Edit</a>
+                <button class="button is-link" type="submit">Delete</button>
+              </form>
             </div>
           </div>
         </article>
         {% endfor %}
-
       </div>
     </section>
     <footer class="footer"></footer>
